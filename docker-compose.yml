@@ -20,12 +20,21 @@ services:
       - 27017:27017
     networks:
       - backend
+    volumes_from:
+      - data-store
   elasticsearch:
     image: elasticsearch:2.0.0
     ports:
       - 9200:9200
     networks:
       - backend
+    volumes_from:
+      - data-store
+  data-store:
+    image: busybox
+    volumes:
+      - ./data/mongodb:/data/db
+      - ./data/elasticsearch:/var/lib/elasticsearch
 
 networks:
   backend:
